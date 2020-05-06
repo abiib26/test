@@ -1,0 +1,56 @@
+{%  extends 'main2.html' %}
+
+{% block content %}
+
+
+    <div class="alert alert-success alert-dismissible fade show">
+        <center> <strong>{{userr1}}</strong><br> {{userr}}.</center>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+ 
+<br>
+
+<div class="row">
+    <div class="col-md-5">
+        <h5>Comments</h5>
+        </hr>
+        <div class="card card-body">
+            <form action="" method="POST">
+                {% csrf_token %}
+               
+                 {{formt}}
+              
+                <br>
+                <input class="btn btn-outline-info  btn-sm btn-block" type="submit" name="Save">
+				<hr>
+            </form>
+            {% for i in cmt %}
+                    
+                <div class="alert alert-info alert-dismissible fade show">
+                    <strong>{{i.created_by}}</strong><br> {{i.body}}.
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            {% endfor %}
+
+
+			
+
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <h5>Functionalities</h5>
+        <hr>
+        <div class="card card-body">            
+            <a type="button" class="btn btn-outline-info  btn-sm btn-block" href="{% url 'create_mch' %}">Register MCH </a>
+            <a type="button" class="btn btn-outline-info  btn-sm btn-block" href="{%url 'create_User' %}">Register Staff </a>
+			<a type="button" class="btn btn-outline-info  btn-sm btn-block" href="{% url 'create_service' %}">New service</a>
+            <a type="button" class="btn btn-outline-info  btn-sm btn-block" href="{%url 'create_order' %}">Make report</a>
+            <br>
+            <ton>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

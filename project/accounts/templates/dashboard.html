@@ -1,0 +1,108 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+
+{%  include 'status.html' %}
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<br>
+
+
+<div class="row">
+	
+    <div class="col-md">
+		<h5>Chart:</h5>
+		<hr>
+        <div class="card card-body"  class="w-25 p-3" >
+            <p style="text-align:center">patients/clients served for</p>
+            <div class="h-50 d-inline-block"  id="myChart" ></div>
+
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <h5>REPORTS:</h5>
+        <hr>
+        <div class="card card-body">
+            <a class="btn btn-primary  btn-sm btn-block" href="">Today's reports</a>
+            <table class="table table-sm">
+				<tr>
+					<th></th>
+                    <th>Date</th>
+                    <th>report type</th>
+                
+                </tr>
+
+                {% for i in orders %}
+
+                <tr>
+                    <th><a class="btn btn-sm btn-info" href="{% url 'view_order' id=i.id %}">view</a</th>
+                    <td>{{i.date_created}}</td>
+                    <td>{{i.name__name}}</td>
+                 
+                </tr>
+                {% endfor %}
+                
+                
+
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+
+	var state ={	
+		'items':[],
+		'values':[],
+	}
+
+
+	var dataURL = `/resultsData`
+	$.ajax({
+		method:'GET',
+		url:dataURL,
+		success:function(response){
+			console.log('RESPONSE:', response)
+			for (var i in response){
+
+				var key = Object.keys(response[i])[0]
+				var value = Object.values(response[i])[1]
+
+				state.items.push(key)
+				state.values.push(value)
+			}
+
+			console.log('STATE:', state)
+			buildChart()
+
+		}
+	})
+
+	function buildChart(){
+			var chartData = {
+			"type":"bar",
+			"scale-x":{
+				"values":state.items
+
+			},
+			"series":[
+				{
+					"values":state.values
+				}
+			]
+		}
+
+
+		zingchart.render({
+		  id: "myChart",
+		  data: chartData,
+		});
+	}
+	
+
+
+	
+</script>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{%  extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                <h3>Register New staffs</h3>
+                {% for i in  forms %}
+                    <div class='field'>
+                        <label for="{{ i.id_for_label}}" class="label">{{i.html_name}}</label>
+                        {{i crispy }}
+                    </div>
+                    
+                    <hr>
+                {% endfor %}
+                
+                <input type="submit" name="Save">
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

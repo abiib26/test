@@ -1,0 +1,27 @@
+{%  extends 'main.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                <h3>Register New staffs</h3>
+                
+                {{formt|crispy }}
+
+                <br>
+				
+                <input class="btn btn-sm btn-info" type="submit" name="Save">
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

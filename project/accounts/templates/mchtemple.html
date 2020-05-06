@@ -1,0 +1,104 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+
+	<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Customer:</h5>
+			<hr>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Customer</a>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="">Place Order</a>
+
+		</div>
+	</div>
+
+	<div class="card card-body">
+		<div class="btn-group" >
+			<a class="btn btn-sm btn-info"href="{% url 'csv_download' %}" >CSV</a>
+			<button class="btn btn-sm btn-info">Excel</button>
+			<button class="btn btn-sm btn-info">PDF</button>
+	   </div>
+		</hr>
+		<table class="table table-sm">
+			<tr>
+				<th>staff Types</th>
+				<th>Total</th>
+				
+				
+			</tr>
+
+			{% for i in serveds1 %}
+
+			<tr>
+				
+				<td>{{i.User__staffType__name}}</td>
+				<td>{{i.User__staffType__name__count}}</td>
+			</tr>
+			{% endfor %}
+
+	   </table>
+   </div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Total served patients</h5>
+			<hr>
+			<h1 style="text-align: center;padding: 10px">{{total_count}}</h1>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+
+			<form method="get">
+				{{myFilter.form}}
+
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Name</th>
+					<th>service</th>
+					<th>User</th>
+                   
+                    <th>Date</th>
+					<th>Remove</th>
+				</tr>
+
+				{% for order in Serveds %}
+
+				<tr>
+					<td>{{order.name}}</td>
+                    <td>{{order.service__name}}</td>
+                    <td>{{order.User__name}}</td>
+                    
+					<td>{{order.date_created}}</td>
+					
+
+					<td><a class="btn btn-sm btn-danger" href="">Delete</a></td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
