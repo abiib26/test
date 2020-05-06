@@ -1,0 +1,29 @@
+{%  extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="col-md-5">
+    <h5>Registred MCHs:</h5>
+    <hr>
+    <div class="card card-body">
+        <a class="btn btn-primary  btn-sm btn-block" href="">Registred MCHs</a>
+        <table class="table table-sm">
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>district</th>
+            </tr>
+
+            {% for i in mchs %}
+                <tr>
+                    <th><a class="btn btn-sm btn-info" href="{%url 'MCHomes' pk=i.id %}">View</a</th>
+                    <td>{{i.name}}</td>
+                    <td>{{i.district}}</td>
+                    
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+</div>
+{% endblock %}

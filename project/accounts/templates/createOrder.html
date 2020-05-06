@@ -1,0 +1,50 @@
+{%  extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+
+	.user_card {
+		width: 910px;
+		margin-left:110px;
+
+	}
+</style>
+<script>
+document.getElementById('d').onchange = function() {
+    document.getElementById('c').disabled = !this.checked;
+};
+    </script>
+
+<div class="row">
+    <div class="user_card">
+        <div class="card card-body">
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                <h3><strong>Create Daily Reports</strong></h3>
+                 
+                {{ formset.management_form }}
+                {% for i in formset %}
+                    <div class='field'>
+                        <label for="{{ i.id_for_label}}" class="label">{{i.html_name}}</label>
+                        {{i}}
+                       
+                    </div>
+                </br>  
+           
+
+                
+       
+                {% endfor %}
+                
+                
+                <input class="btn btn-sm btn-info" type="submit" name="Save">
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

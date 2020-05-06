@@ -1,0 +1,38 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+
+
+
+<br>
+
+<div class="row">
+    <div class="w-50 p-3 ">
+        <h5>Comments</h5>
+        </hr>
+        <div class="card card-body">
+            <form action="" method="POST">
+                {% csrf_token %}
+               
+                 {{formt}}
+              
+                <br>
+                <input class="btn btn-outline-info  btn-sm btn-block" type="submit" name="Save">
+				<hr>
+            </form>
+			{% for i in cmt %}
+				
+                <div class="alert alert-success alert-dismissible fade show">
+                    <strong>{{i.created_by}}</strong><br> {{i.body}}.
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            {% endfor %}
+
+			
+
+        </div>
+    </div>
+
+    
+
+{% endblock %}
