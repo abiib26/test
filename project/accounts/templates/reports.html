@@ -1,0 +1,136 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+
+            
+          <form action="" method="get">
+            <div>Name &#160;&#160;&#160;&#160;&#160;&#160;{{ myFilter.form.name }}</div>
+            <div>service&#160;&#160;&#160;&#160;&#160;{{ myFilter.form.service }}</div>
+            <div>Mch&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{{ myFilter.form.MCH }}</div>
+            <div class="datepicker">startDate{{ myFilter.form.startDate }}</div>
+            <div class="datepicker">endDate&#160;{{ myFilter.form.endDate }}</div>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+    
+      
+            
+        </div>
+    </div>
+    
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md">
+		   
+        <div class="card card-body">
+			
+			 <div class="btn-group" >
+			  <a class="btn btn-sm btn-info"href="{% url 'csv_download' %}" >CSV</a>
+			  <button class="btn btn-sm btn-info">Excel</button>
+			  <button class="btn btn-sm btn-info">PDF</button>
+			</div>
+			</hr>
+            <table class="table table-sm">
+                <tr>
+                    <th>Name</th>
+                    <th>Service</th>
+                    <th>worked_by</th>
+                    
+                    <th>Date</th>
+                    <th>Remove</th>
+                </tr>
+
+                {% for i in serveds %}
+
+                <tr>
+                    <td>{{i.name}}</td>
+                    <td>{{i.service__name}}</td>
+                    <td>{{i.User__name}}</td>
+                    
+                    <td>{{i.date_created}}</td>
+                   
+                
+
+                    <td><a class="btn btn-sm btn-danger" href="{% url 'delete' i.id %}">Delete</a></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var state ={    
+        'items':[],
+        'values':[],
+    }
+
+
+    var dataURL = `/resultsData`
+    $.ajax({
+        method:'GET',
+        url:dataURL,
+        success:function(response){
+            console.log('RESPONSE:', response)
+            for (var i in response){
+
+                var key = Object.keys(response[i])[0]
+                var value = Object.values(response[i])[1]
+
+                state.items.push(key)
+                state.values.push(value)
+            }
+
+            console.log('STATE:', state)
+            buildChart()
+
+        }
+    })
+
+    function buildChart(){
+            var chartData = {
+            "type":"bar",
+            "scale-x":{
+                "values":state.items
+
+            },
+            "series":[
+                {
+                    "values":state.values
+                }
+            ]
+        }
+
+
+        zingchart.render({
+          id: "myChart",
+          data: chartData,
+        });
+    }
+    
+
+
+    
+</script>
+<script>
+     $( function() {
+        $( "#datepicker" ).datepicker();
+    } );
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,147 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+<br>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+
+            
+          <form action="" method="get">
+			<div><strong>Select Mch</strong>{{ myFilter2.form.MCH }}</div>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+    
+      
+            
+        </div>
+    </div>
+    
+</div>
+</br>
+<div class="row">
+    <div class="col-md">
+		   
+        <div class="card card-body">
+			
+			 <div class="btn-group" >
+			  <a class="btn btn-sm btn-info"href="{% url 'csv_download' %}" >CSV</a>
+			  <button class="btn btn-sm btn-info">Excel</button>
+			  <button class="btn btn-sm btn-info">PDF</button>
+			</div>
+			</hr>
+            <table class="table table-sm">
+                <tr>
+                   
+                    <th>Service</th>
+                    <th>Total they done</th>
+                    
+                    
+                </tr>
+
+                {% for i in serveds2 %}
+
+                <tr>
+                    
+                    <td>{{i.service__name}}</td>
+                    <td>{{i.service__count}}</td>
+                    
+                   
+                   
+                
+
+                    
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card card-body"  class="w-25 p-3" >
+            <div class="h-50 d-inline-block"  id="myChart" ></div>
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+<script>
+
+	var state ={	
+		'items':[],
+		'values':[],
+	}
+
+
+	var dataURL = `/resultsData`
+	$.ajax({
+		method:'GET',
+		url:dataURL,
+		success:function(response){
+			console.log('RESPONSE:', response)
+			for (var i in response){
+
+				var key = Object.keys(response[i])[0]
+				var value = Object.values(response[i])[1]
+
+				state.items.push(key)
+				state.values.push(value)
+			}
+
+			console.log('STATE:', state)
+			buildChart()
+
+		}
+	})
+
+	function buildChart(){
+			var chartData = {
+			"type":"area3d",
+            
+        
+			"scale-x":{
+				"values":state.items
+
+			},
+			"series":[
+				{
+					"values":state.values
+				}
+			]
+		}
+
+
+		zingchart.render({
+		  id: "myChart",
+		  data: chartData,
+		});
+	}
+	
+
+
+	
+</script>
+
+
+
+
+
+{% endblock %}

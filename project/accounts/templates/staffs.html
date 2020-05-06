@@ -1,0 +1,57 @@
+{%  extends 'main.html' %}
+
+{% block content %}
+
+	<br>
+
+<h3><center>All mch's staffs </center> </h3>
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+
+			<form method="get">
+				{{myFilter.form}}
+
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Name</th>
+					<th>email</th>
+					<th>work</th>
+                    <th>mch</th>
+					<th>last login</th>
+					<th>Remove</th>
+				</tr>
+
+				{% for order in staffUsers %}
+
+				<tr>
+					<td>{{order.name}}</td>
+                    <td>{{order.email}}</td>
+                    <td>{{order.staffType__name}}</td>
+                    <td>{{order.MCH__name}}</td>
+					<td>{{order.last_login}}</td>
+
+					<td><a class="btn btn-sm btn-danger" href="">Delete</a></td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
